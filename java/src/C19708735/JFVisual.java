@@ -4,6 +4,8 @@ import ie.tudublin.Visual;
 
 public class JFVisual extends Visual {
 
+    Car car;
+
     int scene = 0;
 
     public void keyPressed()
@@ -26,6 +28,8 @@ public class JFVisual extends Visual {
     public void setup() {
         startMinim();
         loadAudio("crash-my-car.mp3");
+
+        car = new Car(this, width, height);
     }
 
     public void draw() {
@@ -33,6 +37,7 @@ public class JFVisual extends Visual {
 
         switch(scene) {
             case 0: {
+                car.drawCar();
 
                 break;
             }
