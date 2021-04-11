@@ -37,8 +37,14 @@ public class JFVisual extends Visual {
 
         switch(scene) {
             case 0: {
+                if (getAudioPlayer().isPlaying()) {
+                    car.moveCar();
+                }
+                
+                car.blinking();
+                car.sky();
                 car.drawCar();
-
+                
                 break;
             }
 
