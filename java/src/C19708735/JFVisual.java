@@ -5,6 +5,7 @@ import ie.tudublin.Visual;
 public class JFVisual extends Visual {
 
     Car car;
+    Wheel wheel;
 
     int scene = 0;
 
@@ -30,6 +31,7 @@ public class JFVisual extends Visual {
         loadAudio("crash-my-car.mp3");
 
         car = new Car(this, width, height);
+        wheel = new Wheel(this, width, height);
     }
 
     public void draw() {
@@ -37,11 +39,6 @@ public class JFVisual extends Visual {
 
         switch(scene) {
             case 0: {
-                if (getAudioPlayer().isPlaying()) {
-                    car.moveCar();
-                }
-                
-                car.blinking();
                 car.sky();
                 car.drawCar();
                 
@@ -49,10 +46,13 @@ public class JFVisual extends Visual {
             }
 
             case 1: {
+                wheel.drawWheel();
+
                 break;
             }
             
             case 2: {
+                
                 break;
             }
             

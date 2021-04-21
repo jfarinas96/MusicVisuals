@@ -9,7 +9,6 @@ public class Car {
 
     float w, h;
     float x, y;
-    float dx, dy;
     
     public Car(JFVisual jf, float w, float h) {
         this.jf = jf;
@@ -81,43 +80,24 @@ public class Car {
         jf.endShape();
 
         //headlights
-        jf.fill(255, 255, 0);
+        jf.fill(225, 173, 1);
         jf.ellipse(leftCorner + 10, headlightsY - 10, incline + 12, incline + 12);
         jf.ellipse(rightCorner - 10, headlightsY - 10, incline + 12, incline + 12);
-    }
 
-    void moveCar() {
-
-        if ((jf.frameCount % 30) == 0) {
-			dx = jf.random(-3, 3);
-            x += dx;
+        if (jf.getAudioPlayer().isPlaying() && (jf.frameCount % 30) == 0) {
+            x += jf.random(-3, 3);
         }
-    }
-
-    void blinking() {
-        float centreScreen = w / 2;
-        float halfW = centreScreen * 0.45f;
-        float leftCorner = centreScreen - halfW;
-        float rightCorner = centreScreen + halfW;
-        float middle = (h / 2) - 50;
-        float incline = leftCorner * 0.2f;
-        float headlightsY = ((middle + incline) + (h * 0.75f)) / 2;
-
-        jf.noStroke();
-        jf.colorMode(PConstants.HSB);
-
-        jf.calculateAverageAmplitude();
-        jf.background(PApplet.map(jf.getSmoothedAmplitude(), 0, 1, 60, 300), 255, 255);
-
-        //headlights
-        jf.ellipse(leftCorner + 10, headlightsY - 10, incline + 12, incline + 12);
-        jf.ellipse(rightCorner - 10, headlightsY - 10, incline + 12, incline + 12);
     }
 
     void sky() {
         jf.colorMode(PConstants.HSB);
 
         jf.calculateAverageAmplitude();
-        jf.background(PApplet.map(jf.getSmoothedAmplitude(), 0, 1, 10, 50), 255, 255);
+        float c = PApplet.map(jf.getSmoothedAmplitude(), 0, 1, 20, 60);
+
+        for (int i = (int) h / 2; i > 0; i--) {
+            jf.stroke(c, i * c, i);
+            jf.line(0, i, w, i);
+        }
     }
 }
