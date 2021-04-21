@@ -18,10 +18,13 @@ public class Wheel {
     }
 
     void drawWheel() {
+        jf.pushMatrix();
         jf.translate(x, y);
 
         jf.noStroke();
-        jf.background(27, 25, 21);
+        jf.fill(27, 25, 21);
+        jf.rect(0, 0, w * 2, h * 2);
+
         jf.fill(169, 27, 13);
         jf.rect(0, 0, w * 2, h * 1.2f);
 
@@ -56,6 +59,7 @@ public class Wheel {
             
             jf.line(0, 0, x_pos, y_pos);               
         }
+        jf.popMatrix();
         jf.popMatrix();
 
         if (jf.getAudioPlayer().isPlaying() && (jf.frameCount % 10) == 0) {

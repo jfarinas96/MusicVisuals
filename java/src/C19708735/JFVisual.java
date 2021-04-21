@@ -6,8 +6,10 @@ public class JFVisual extends Visual {
 
     Car car;
     Wheel wheel;
+    Lights lights1, lights2, lights3;
 
     int scene = 0;
+    int ready = 0;
 
     public void keyPressed()
     {
@@ -32,6 +34,8 @@ public class JFVisual extends Visual {
 
         car = new Car(this, width, height);
         wheel = new Wheel(this, width, height);
+        lights1 = new Lights(this, width / 2, height / 2);
+        lights2 = new Lights(this, width / 2, height / 2);
     }
 
     public void draw() {
@@ -52,6 +56,13 @@ public class JFVisual extends Visual {
             }
             
             case 2: {
+                lights1.render();
+                lights1.roadLines();
+                ready = lights1.newLine();
+
+                if (ready == 1) {
+                    lights2.roadLines();
+                }
                 
                 break;
             }
