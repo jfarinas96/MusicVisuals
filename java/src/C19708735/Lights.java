@@ -11,6 +11,9 @@ public class Lights {
     float x, y;
     float midTop, midBot;
 
+    float[] lerpedBuffer;
+
+
     public Lights(JFVisual jf, float halfW, float halfH) {
         this.jf = jf;
         this.halfW = halfW;
@@ -20,15 +23,18 @@ public class Lights {
         midBot = PApplet.map(1, 0, 2, jf.width * 0.2f, halfW * 1.2f);
         x = 0;
         y = 0;
+
+        lerpedBuffer = new float[jf.width];
     }
 
     void render() {
+        jf.colorMode(PConstants.RGB);
         jf.noStroke();
         jf.rectMode(PConstants.CORNER);
 
         // sand
         jf.fill(85, 74, 41);
-        jf.rect(0, halfH, jf.width * 2, halfH);
+        jf.rect(0, halfH, jf.width, halfH);
 
         // road
         jf.fill(27, 25, 21);
@@ -64,8 +70,8 @@ public class Lights {
         if (x > -(midTop - midBot) && y < halfH) {
 
             jf.calculateAverageAmplitude();
-            x -= jf.getSmoothedAmplitude() * 2 * 10;
-            y += jf.getSmoothedAmplitude() * 2.5f * 10;
+            x -= 2 * 5;
+            y += 2.5f * 5;
         }
         else {
             respawnLine();
@@ -80,7 +86,7 @@ public class Lights {
     int newCheck = 0;
 
     int newLine() {
-        if (jf.getAudioPlayer().isPlaying() && y > halfH * 0.48f) {
+        if (jf.getAudioPlayer().isPlaying() && y > halfH * 0.5f) {
             newCheck = 1;
         }
 
@@ -88,7 +94,28 @@ public class Lights {
     }
 
     void northernLights() {
+        jf.colorMode(PConstants.HSB);
+        jf.strokeWeight(1);
+        float c1 = PApplet.map(80, 0, 360, 0, 255);
+        float c2 = PApplet.map(280, 0, 360, 0, 255);
+        //for(int j = 0 ; j < jf.getBands().length ; j++)
+        //{
+          //  float startY = PApplet.map(jf.getSmoothedBands()[j], 0, jf.getBands().length, 0, halfH);
 
+            for(int i = 0; i < jf.getAudioBuffer().size(); i ++)
+            {
+                lerpedBuffer[i] = PApplet.lerp(lerpedBuffer[i], jf.getAudioBuffer().get(i), 0.01f);
+                
+                jf.stroke(
+                    PApplet.map(halfH * 0.5f + lerpedBuffer[i] * halfH * 0.5f * 10, 0, halfH, c2, c1)
+                    , 255
+                    , 255
+                );
+                
+                //line(i, halfHeight - lerpedBuffer[i] * halfHeight * 4, i, halfHeight + lerpedBuffer[i] * halfHeight * 4);
+                jf.line(i, halfH * 0.25f + lerpedBuffer[i] * halfH * 0.5f * 10, i, halfH * 0.75f + lerpedBuffer[i] * halfH * 0.5f * 10);
+            }
+        //}
     }
     
 }

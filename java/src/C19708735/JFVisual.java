@@ -56,6 +56,7 @@ public class JFVisual extends Visual {
             }
             
             case 2: {
+                lights1.northernLights();
                 lights1.render();
                 lights1.roadLines();
                 ready = lights1.newLine();
