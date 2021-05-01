@@ -9,6 +9,7 @@ public class Car {
 
     float w, h;
     float x, y;
+    float x1, y1;
     
     public Car(JFVisual jf, float w, float h) {
         this.jf = jf;
@@ -50,6 +51,8 @@ public class Car {
         jf.rectMode(PConstants.CENTER);
         jf.rect(leftCorner + 10, h * 0.75f, incline + 20, incline * 0.8f);
         jf.rect(rightCorner - 10, h * 0.75f, incline + 20, incline * 0.8f);
+
+        roadLines();
 
         // top section of car
         jf.fill(169, 27, 13);
@@ -96,11 +99,43 @@ public class Car {
 
         jf.calculateAverageAmplitude();
         float c = PApplet.map(jf.getSmoothedAmplitude(), 0, 1, c2, c1);
-        float j = h / 2;
         
         for (int i = 0; i < (int) h / 2; i++) {
-            jf.stroke(c, i * c * jf.getSmoothedAmplitude() * 1.5f, i * jf.getSmoothedAmplitude() * 2.0f);
+            jf.stroke(c, i * c, i * jf.getSmoothedAmplitude() * 2.0f);
             jf.line(0, i, w, i);            
         }
+    }
+
+    void roadLines() {
+        jf.pushMatrix();
+        jf.translate(x1, y1);
+
+        jf.fill(255);
+        jf.beginShape();
+        jf.vertex((w / 2) * 0.98f, h);
+        jf.vertex((w / 2) * 1.02f, h);
+        jf.vertex((w / 2) * 1.03f, h * 1.2f);
+        jf.vertex((w / 2) * 0.97f, h * 1.2f);
+        jf.endShape();
+
+        jf.popMatrix();
+
+        if (jf.getAudioPlayer().isPlaying()) {
+            moveRoadLines();
+        }
+    }
+
+    void moveRoadLines() {
+        if (y1 > -((h / 2) + 100)) {
+
+            y1 -= 2.5f * 5;
+        }
+        else {
+            respawnLine();
+        }
+    }
+
+    void respawnLine() {
+        y1 = 0;
     }
 }

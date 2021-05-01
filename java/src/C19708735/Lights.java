@@ -69,7 +69,6 @@ public class Lights {
     void moveRoadLines() {
         if (x > -(midTop - midBot) && y < halfH) {
 
-            jf.calculateAverageAmplitude();
             x -= 2 * 5;
             y += 2.5f * 5;
         }
