@@ -19,13 +19,14 @@ public class Wheel {
 
     void drawWheel() {
     
-        jf.pushMatrix();
-        jf.translate(x, y);
-
+        jf.rectMode(PConstants.CENTER);
         // road
         jf.noStroke();
         jf.fill(27, 25, 21);
         jf.rect(0, 0, w * 2, h * 2);
+
+        jf.pushMatrix();
+        jf.translate(x, y);
 
         // car
         jf.fill(169, 27, 13);
