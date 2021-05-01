@@ -89,15 +89,18 @@ public class Car {
         }
     }
 
-    void sky() {
+    void sky(int change) {
         jf.colorMode(PConstants.HSB);
+        float c1 = PApplet.map(0, 0, 360, 0, 255);
+        float c2 = PApplet.map(40, 0, 360, 0, 255);
 
         jf.calculateAverageAmplitude();
-        float c = PApplet.map(jf.getSmoothedAmplitude(), 0, 1, 20, 60);
-
-        for (int i = (int) h / 2; i > 0; i--) {
-            jf.stroke(c, i * c, i);
-            jf.line(0, i, w, i);
+        float c = PApplet.map(jf.getSmoothedAmplitude(), 0, 1, c2, c1);
+        float j = h / 2;
+        
+        for (int i = 0; i < (int) h / 2; i++) {
+            jf.stroke(c, i * c * jf.getSmoothedAmplitude() * 1.5f, i * jf.getSmoothedAmplitude() * 2.0f);
+            jf.line(0, i, w, i);            
         }
     }
 }

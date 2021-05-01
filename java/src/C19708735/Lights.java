@@ -98,6 +98,17 @@ public class Lights {
         jf.strokeWeight(1);
         float c1 = PApplet.map(80, 0, 360, 0, 255);
         float c2 = PApplet.map(280, 0, 360, 0, 255);
+        float c3 = PApplet.map(230, 0, 360, 0, 255);
+        float c4 = PApplet.map(300, 0, 360, 0, 255);
+
+        jf.calculateAverageAmplitude();
+        float c = PApplet.map(jf.getSmoothedAmplitude(), 0, 1, c3, c4);
+
+        for (int i = (int) halfH; i > 0; i--) {
+            jf.stroke(c, i * c * jf.getSmoothedAmplitude() * 1.5f, i * jf.getSmoothedAmplitude() * 2.0f);
+            jf.line(0, i, jf.width, i);
+        }
+
         //for(int j = 0 ; j < jf.getBands().length ; j++)
         //{
           //  float startY = PApplet.map(jf.getSmoothedBands()[j], 0, jf.getBands().length, 0, halfH);

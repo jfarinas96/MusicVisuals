@@ -18,16 +18,20 @@ public class Wheel {
     }
 
     void drawWheel() {
+    
         jf.pushMatrix();
         jf.translate(x, y);
 
+        // road
         jf.noStroke();
         jf.fill(27, 25, 21);
         jf.rect(0, 0, w * 2, h * 2);
 
+        // car
         jf.fill(169, 27, 13);
         jf.rect(0, 0, w * 2, h * 1.2f);
 
+        // wheel
         jf.fill(0);
         jf.ellipse(w / 2, h / 2, 0.9f * h, 0.9f * h);
 

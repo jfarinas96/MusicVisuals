@@ -10,6 +10,7 @@ public class JFVisual extends Visual {
 
     int scene = 0;
     int ready = 0;
+    int change = 1;
 
     public void keyPressed()
     {
@@ -21,6 +22,11 @@ public class JFVisual extends Visual {
 
         if (keyCode >= '0' && keyCode <= '3') {
             scene = keyCode - '0';
+        }
+        
+        if (keyCode == '0')
+        {
+            change = -change;
         }
     }
 
@@ -43,7 +49,7 @@ public class JFVisual extends Visual {
 
         switch(scene) {
             case 0: {
-                car.sky();
+                car.sky(change);
                 car.drawCar();
                 
                 break;
