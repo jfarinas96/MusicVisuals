@@ -28,6 +28,8 @@ public class Lights {
     }
 
     void render() {
+        northernLights();
+
         jf.colorMode(PConstants.RGB);
         jf.noStroke();
         jf.rectMode(PConstants.CORNER);

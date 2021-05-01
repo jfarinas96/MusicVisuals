@@ -38,8 +38,8 @@ public class JFVisual extends Visual {
         startMinim();
         loadAudio("crash-my-car.mp3");
 
-        car = new Car(this, width, height);
-        wheel = new Wheel(this, width, height);
+        car = new Car(this, width / 2, height / 2);
+        wheel = new Wheel(this, width / 2, height / 2);
         lights1 = new Lights(this, width / 2, height / 2);
         lights2 = new Lights(this, width / 2, height / 2);
     }
@@ -50,26 +50,24 @@ public class JFVisual extends Visual {
         switch(scene) {
             case 0: {
                 car.sky(change);
-                car.drawCar();
+                car.render();
                 
                 break;
             }
 
             case 1: {
-                wheel.drawWheel();
+                wheel.render();
 
                 break;
             }
             
             case 2: {
-                lights1.northernLights();
                 lights1.render();
                 lights1.roadLines();
-                ready = lights1.newLine();
 
-                if (ready == 1) {
+                ready = lights1.newLine();
+                if (ready == 1)
                     lights2.roadLines();
-                }
                 
                 break;
             }
