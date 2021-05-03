@@ -11,6 +11,9 @@ public class Car {
     float x, y;
     float x1, y1;
     float[] randX, randY;
+    float rotSun = 0;
+    float rotMoon = 0;
+    int diameter;
     
     public Car(JFVisual jf, float w, float h) {
         this.jf = jf;
@@ -24,6 +27,8 @@ public class Car {
             randX[i] = jf.random(0, jf.width);
             randY[i] = jf.random(0, halfH);
         }
+
+        diameter = (int) (jf.height / 4.0f);
     }
 
     void render(int change) {        
@@ -116,9 +121,10 @@ public class Car {
     }
 
     void sky(int change) {
+
         jf.colorMode(PConstants.HSB);
         float c, c1, c2;
-        float b;
+        float b = 1;
 
         jf.calculateAverageAmplitude();
 
@@ -126,7 +132,6 @@ public class Car {
             c1 = PApplet.map(10, 0, 360, 0, 255);
             c2 = PApplet.map(40, 0, 360, 0, 255);
             c = PApplet.map(jf.getSmoothedAmplitude(), 0, 1, c2, c1);
-            b = jf.getSmoothedAmplitude() * 2.0f;
         }
         else {
             c1 = PApplet.map(210, 0, 360, 0, 255);
@@ -148,12 +153,74 @@ public class Car {
 
         if (change != 1) {
             jf.rectMode(PConstants.CENTER);
+
+            jf.fill(255);
             
             for (int j = 0; j < 100; j++) {
                 jf.rect(randX[j], randY[j], 2, 2);
             }
+
+            moon(change);
+        }
+        else {
+            sun(change);
         }
     }
+
+    void sun(int change) {
+
+        jf.colorMode(PConstants.RGB);
+        jf.noStroke();
+
+        float cx = jf.width * 0.9f;
+        float cy = jf.height * 4.0f;
+
+        jf.pushMatrix();
+
+        jf.translate(cx, cy);
+        jf.rotate(rotSun);
+        
+        jf.fill(255, 255, 0);
+        jf.ellipse(-cx + (jf.width * 0.9f), -cy + (jf.height * 0.2f), diameter, diameter);
+
+        jf.popMatrix();
+
+        /*
+        int g = 100;
+        
+        for (int r = radius; r > 0; --r) {
+            jf.fill(255, g, 0);
+            jf.ellipse(-cx + (jf.width * 0.9f), -cy + (jf.height * 0.2f), r, r);
+            g = g + 1 % 100;
+        }
+        */
+
+        if (jf.getAudioPlayer().isPlaying() && change == 1)
+            rotSun -= 0.01f * 0.025;
+    }
+
+    void moon(int change) {
+
+        jf.colorMode(PConstants.RGB);
+        jf.noStroke();
+
+        float cx = jf.width * 0.1f;
+        float cy = jf.height * 4.0f;
+        
+        jf.pushMatrix();
+
+        jf.translate(cx, cy);
+        jf.rotate(rotMoon);
+        
+        jf.fill(244, 241, 201);
+        jf.ellipse(-cx + (jf.width * 0.9f) * 1.07f, -cy + ((halfW * 0.45f) + (diameter * 0.5f)) * 1.07f, diameter, diameter);
+
+        jf.popMatrix();
+
+        if (jf.getAudioPlayer().isPlaying() && change != 1)
+            rotMoon -= 0.01f * 0.01;
+    }
+
 
     void roadLines() {
         jf.pushMatrix();

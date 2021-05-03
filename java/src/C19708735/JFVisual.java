@@ -18,6 +18,7 @@ public class JFVisual extends Visual {
         {
             getAudioPlayer().cue(0);
             getAudioPlayer().play();
+            change = 1;
         }
 
         if (keyCode >= '0' && keyCode <= '3') {
@@ -26,7 +27,7 @@ public class JFVisual extends Visual {
         
         if (keyCode == '2')
         {
-            change = -change;
+            change = 2;
         }
     }
 

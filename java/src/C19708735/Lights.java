@@ -71,8 +71,8 @@ public class Lights {
     void moveRoadLines() {
         if (x > -(midTop - midBot) && y < halfH) {
 
-            x -= 2 * 5;
-            y += 2.5f * 5;
+            x -= 2 * 6;
+            y += 2.5f * 6;
         }
         else {
             respawnLine();
