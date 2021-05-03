@@ -24,7 +24,7 @@ public class JFVisual extends Visual {
             scene = keyCode - '0';
         }
         
-        if (keyCode == '0')
+        if (keyCode == '2')
         {
             change = -change;
         }
@@ -49,8 +49,7 @@ public class JFVisual extends Visual {
 
         switch(scene) {
             case 0: {
-                car.sky(change);
-                car.render();
+                car.render(change);
                 
                 break;
             }
@@ -62,6 +61,7 @@ public class JFVisual extends Visual {
             }
             
             case 2: {
+                car.sky(change);
                 lights1.render();
                 lights1.roadLines();
 

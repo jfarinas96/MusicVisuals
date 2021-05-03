@@ -30,7 +30,7 @@ public class Wheel {
         jf.translate(x, y);
 
         // car
-        jf.fill(169, 27, 13);
+        jf.fill(169, 0, 0);
         jf.rect(0, 0, jf.width, halfH * 1.2f);
 
         // wheel

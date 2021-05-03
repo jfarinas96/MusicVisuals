@@ -17,7 +17,7 @@ public class Car {
         this.halfH = h;
     }
 
-    void render() {        
+    void render(int change) {        
 
         float centreScreen = halfW;
         float halfCar = centreScreen * 0.45f;
@@ -28,16 +28,24 @@ public class Car {
         float outline = 10;
         float headlightsY = ((middle + incline) + (jf.height * 0.75f)) / 2;
 
+        sky(change);
+
         jf.colorMode(PConstants.RGB);
         jf.noStroke();
 
         // sand
-        jf.fill(85, 74, 41);
+        if (change == 1)
+            jf.fill(145, 117, 74);
+        else
+            jf.fill(118, 95, 60);
         jf.rectMode(PConstants.CORNER);
         jf.rect(0, middle + 20, jf.width, jf.height - middle - 20);
 
         // road
-        jf.fill(27, 25, 21);
+        if (change == 1)
+            jf.fill(37, 34, 30);
+        else
+            jf.fill(27, 25, 21);
         jf.beginShape();
         jf.vertex(0, jf.height);
         jf.vertex(leftCorner + 20, middle + 20);
@@ -57,7 +65,10 @@ public class Car {
         roadLines();
 
         // top section of car
-        jf.fill(169, 27, 13);
+        if (change == 1)
+            jf.fill(169, 0, 0);
+        else
+            jf.fill(138, 3, 3);
         jf.beginShape();
         jf.vertex(leftCorner, middle);
         jf.vertex(leftCorner + incline, middle * 0.45f);
@@ -103,21 +114,29 @@ public class Car {
         jf.calculateAverageAmplitude();
 
         if (change == 1) {
-            c1 = PApplet.map(0, 0, 360, 0, 255);
+            c1 = PApplet.map(10, 0, 360, 0, 255);
             c2 = PApplet.map(40, 0, 360, 0, 255);
             c = PApplet.map(jf.getSmoothedAmplitude(), 0, 1, c2, c1);
             b = jf.getSmoothedAmplitude() * 2.0f;
-        } 
+        }
         else {
-            c1 = PApplet.map(230, 0, 360, 0, 255);
-            c2 = PApplet.map(300, 0, 360, 0, 255);
+            c1 = PApplet.map(210, 0, 360, 0, 255);
+            c2 = PApplet.map(270, 0, 360, 0, 255);
             c = PApplet.map(jf.getSmoothedAmplitude(), 0, 1, c1, c2);
             b = jf.getSmoothedAmplitude();
         }
         
         for (int i = 0; i < (int) halfH; i++) {
-            jf.stroke(c, i * c, i * b);
-            jf.line(0, i, jf.width, i);            
+            if (change == 1) {
+                jf.stroke(c, i + 50, i);
+                jf.line(0, i, jf.width, i);
+            }
+            else {
+                jf.stroke(c, i * c, i * b);
+                jf.line(0, i, jf.width, i);
+                
+                // stars
+            }
         }
     }
 
