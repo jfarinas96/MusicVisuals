@@ -31,7 +31,7 @@ public class Wheel {
 
         // car
         jf.fill(169, 0, 0);
-        jf.rect(0, 0, jf.width, halfH * 1.2f);
+        jf.rect(0, -halfH, jf.width, jf.height + (halfH * 0.2f));
 
         // wheel
         jf.fill(0);
