@@ -10,11 +10,20 @@ public class Car {
     float halfW, halfH;
     float x, y;
     float x1, y1;
+    float[] randX, randY;
     
     public Car(JFVisual jf, float w, float h) {
         this.jf = jf;
         this.halfW = w;
         this.halfH = h;
+
+        randX = new float[50];
+        randY = new float[50];
+
+        for (int i = 0; i < 50; i++) {
+            randX[i] = jf.random(0, jf.width);
+            randY[i] = jf.random(0, halfH);
+        }
     }
 
     void render(int change) {        
@@ -135,7 +144,11 @@ public class Car {
                 jf.stroke(c, i * c, i * b);
                 jf.line(0, i, jf.width, i);
                 
-                // stars
+                jf.rectMode(PConstants.CENTER);
+                
+                for (int j = 0; j < 30; j++) {
+                    jf.rect(randX[j], randY[j], 2, 2);
+                }
             }
         }
     }
