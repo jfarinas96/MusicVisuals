@@ -17,10 +17,10 @@ public class Car {
         this.halfW = w;
         this.halfH = h;
 
-        randX = new float[50];
-        randY = new float[50];
+        randX = new float[100];
+        randY = new float[100];
 
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 100; i++) {
             randX[i] = jf.random(0, jf.width);
             randY[i] = jf.random(0, halfH);
         }
@@ -138,17 +138,19 @@ public class Car {
         for (int i = 0; i < (int) halfH; i++) {
             if (change == 1) {
                 jf.stroke(c, i + 50, i);
-                jf.line(0, i, jf.width, i);
             }
             else {
                 jf.stroke(c, i * c, i * b);
-                jf.line(0, i, jf.width, i);
-                
-                jf.rectMode(PConstants.CENTER);
-                
-                for (int j = 0; j < 30; j++) {
-                    jf.rect(randX[j], randY[j], 2, 2);
-                }
+            }
+
+            jf.line(0, i, jf.width, i);
+        }
+
+        if (change != 1) {
+            jf.rectMode(PConstants.CENTER);
+            
+            for (int j = 0; j < 100; j++) {
+                jf.rect(randX[j], randY[j], 2, 2);
             }
         }
     }
