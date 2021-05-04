@@ -19,10 +19,12 @@ public class JFVisual extends Visual {
         {
             getAudioPlayer().cue(0);
             getAudioPlayer().play();
+
             change = 1;
+            car.reset();
         }
 
-        if (keyCode >= '0' && keyCode <= '3') {
+        if (keyCode >= '0' && keyCode <= '2') {
             scene = keyCode - '0';
         }
     
@@ -77,10 +79,6 @@ public class JFVisual extends Visual {
                 else
                     lights2.roadLines();
                 
-                break;
-            }
-            
-            case 3: {
                 break;
             }
         }

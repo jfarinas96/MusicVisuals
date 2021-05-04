@@ -184,7 +184,7 @@ public class Car {
             if (jf.getAudioPlayer().isPlaying()) {
                 starsY += 0.1f * (speed + 1);
                 if (visited == 1)
-                    moonY += 0.04f;
+                    moonY += 0.03f;
                     // rotMoon -= 0.01f * 0.013;
             }
         }
@@ -204,7 +204,7 @@ public class Car {
         jf.popMatrix();
 
         if (jf.getAudioPlayer().isPlaying())
-            sunY += 0.035f;
+            sunY += 0.038f;
 
         // rotating sun
         /*
@@ -291,5 +291,11 @@ public class Car {
 
     void respawnLine() {
         roadY = (jf.height * 0.2f) + 10;
+    }
+
+    void reset() {
+        sunY = 0;
+        starsY = 0;
+        moonY = 0;
     }
 }
