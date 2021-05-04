@@ -10,7 +10,8 @@ public class Car {
     float halfW, halfH;
     float x, y;
     float roadX, roadY;
-    float starsX;
+    float starsX, starsY;
+    float sunY, moonY;
     float[] randX, randY;
     float rotStars = 0;
     float rotSun = 0;
@@ -27,14 +28,14 @@ public class Car {
         randY = new float[numStars];
 
         for (int i = 0; i < numStars; i++) {
-            randX[i] = jf.random(-halfW, jf.width * 2.0f);
-            randY[i] = jf.random(0, halfH);
+            randX[i] = jf.random(0, jf.width);
+            randY[i] = jf.random(-(jf.height * 1.5f), halfH);
         }
 
         diameter = (int) (jf.height * 0.15f);
     }
 
-    void render(int change, int scene) {        
+    void render(int change, int scene, int visited) {        
 
         float centreScreen = halfW;
         float halfCar = centreScreen * 0.45f;
@@ -45,8 +46,10 @@ public class Car {
         float outline = 10;
         float headlightsY = ((middle + incline) + (jf.height * 0.75f)) / 2;
 
-        sky(change, scene);
-        if (change != 1)
+        sky(change, scene, visited);
+        if (change == 1)
+            sun();
+        else
             moon();
 
         jf.colorMode(PConstants.RGB);
@@ -133,7 +136,7 @@ public class Car {
         }
     }
 
-    void sky(int change, int speed) {
+    void sky(int change, int speed, int visited) {
 
         jf.colorMode(PConstants.HSB);
         float c, c1, c2;
@@ -155,7 +158,7 @@ public class Car {
         
         for (int i = 0; i < (int) halfH; i++) {
             if (change == 1) {
-                jf.stroke(c, i + (200 * jf.getSmoothedAmplitude()), i);
+                jf.stroke(c, i + 50 + (10 * jf.getSmoothedAmplitude()), i);
             }
             else {
                 jf.stroke(c, i * c, i * b);
@@ -170,7 +173,7 @@ public class Car {
             jf.fill(255);
 
             jf.pushMatrix();
-            jf.translate(starsX, 0);
+            jf.translate(0, starsY);
             
             for (int j = 0; j < numStars; j++) {
                 jf.rect(randX[j], randY[j], 2, 2);
@@ -179,8 +182,10 @@ public class Car {
             jf.popMatrix();
 
             if (jf.getAudioPlayer().isPlaying()) {
-                starsX -= 0.1f * (speed + 1);
-                rotMoon -= 0.01f * 0.012;
+                starsY += 0.1f * (speed + 1);
+                if (visited == 1)
+                    moonY += 0.04f;
+                    // rotMoon -= 0.01f * 0.013;
             }
         }
     }
@@ -189,7 +194,20 @@ public class Car {
 
         jf.colorMode(PConstants.RGB);
         jf.noStroke();
+        jf.fill(255, 255, 0);
 
+        jf.pushMatrix();
+        jf.translate(0, sunY);
+        
+        jf.ellipse(jf.width * 0.15f, (halfH - 50), diameter, diameter);
+
+        jf.popMatrix();
+
+        if (jf.getAudioPlayer().isPlaying())
+            sunY += 0.035f;
+
+        // rotating sun
+        /*
         float cx = jf.width * 0.5f;
         float cy = jf.height * 0.8f;
 
@@ -198,29 +216,37 @@ public class Car {
         jf.translate(cx, cy);
         jf.rotate(rotSun);
         
-        jf.fill(255, 255, 0);
         jf.ellipse(-cx + (jf.width * 0.2f), -cy + ((halfH - 50) * 0.5f), diameter, diameter);
 
-        /*
         int g = 100;
         for (int r = diameter; r > 0; --r) {
             jf.fill(241, 241, g);
             jf.ellipse(-cx + (jf.width * 0.9f) * 1.07f, -cy + ((halfH - 50) + (diameter * 0.5f)) * 1.07f, r, r);
             g = g + 1 % 100;
         }
-        */
-
+        
         jf.popMatrix();
 
         if (jf.getAudioPlayer().isPlaying())
-            rotSun -= 0.01f * 0.025;
+            //rotSun -= 0.01f * 0.025;
+        */
     }
 
     void moon() {
 
         jf.colorMode(PConstants.RGB);
         jf.noStroke();
+        jf.fill(244, 241, 201);
 
+        jf.pushMatrix();
+        jf.translate(0, moonY);
+        
+        jf.ellipse(jf.width * 0.85f, (halfH - 30) * 0.33f, diameter, diameter);
+
+        jf.popMatrix();
+
+        // rotating moon
+        /*
         float cx = jf.width * 0.5f;
         float cy = jf.height * 4.5f;
         
@@ -228,10 +254,10 @@ public class Car {
         jf.translate(cx, cy);
         jf.rotate(rotMoon);
         
-        jf.fill(244, 241, 201);
         jf.ellipse(-cx + jf.width + (diameter * 0.5f), -cy + (halfH - 50) - (diameter * 0.75f), diameter, diameter);
 
         jf.popMatrix();
+        */
     }
 
 
@@ -256,7 +282,6 @@ public class Car {
 
     void moveRoadLines() {
         if (roadY > -((halfH) + 40)) {
-
             roadY -= 2.5f * 5;
         }
         else {

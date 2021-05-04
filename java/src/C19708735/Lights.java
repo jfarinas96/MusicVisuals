@@ -64,13 +64,11 @@ public class Lights {
 
         if (jf.getAudioPlayer().isPlaying()) {
             moveRoadLines();
-            newLine();
         }
     }
 
     void moveRoadLines() {
-        if (x > -(midTop - midBot) && y < halfH) {
-
+        if (x > -(midBot) && y < halfH) {
             x -= 2 * 6;
             y += 2.5f * 6;
         }
