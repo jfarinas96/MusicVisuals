@@ -6,7 +6,7 @@ public class JFVisual extends Visual {
 
     Car car;
     Wheel wheel;
-    Lights lights1, lights2, lights3;
+    Lights lights;
 
     int scene = 0;
     int ready = 0;
@@ -51,8 +51,7 @@ public class JFVisual extends Visual {
 
         car = new Car(this, width / 2, height / 2);
         wheel = new Wheel(this, width / 2, height / 2);
-        lights1 = new Lights(this, width / 2, height / 2);
-        lights2 = new Lights(this, width / 2, height / 2);
+        lights = new Lights(this, width / 2, height / 2);
     }
 
     public void draw() {
@@ -72,16 +71,9 @@ public class JFVisual extends Visual {
             }
             
             case 2: {
+                lights.render();
                 car.sky(change, scene, visited);
-                lights1.render();
-                lights1.roadLines();
-
-                if (ready != 1)
-                    ready = lights1.newLine();
-                else
-                    lights2.roadLines();
-                
-                break;
+                lights.northernLights();
             }
         }
         

@@ -8,7 +8,8 @@ public class Lights {
     JFVisual jf;
     
     float halfW, halfH;
-    float x, y;
+    float x1, y1;
+    float x2, y2;
     float midTop, midBot;
 
     float[] lerpedBuffer;
@@ -21,15 +22,11 @@ public class Lights {
 
         midTop = PApplet.map(1, 0, 2, halfW * 1.1f, halfW * 1.25f);
         midBot = PApplet.map(1, 0, 2, jf.width * 0.2f, halfW * 1.2f);
-        x = 0;
-        y = 0;
 
         lerpedBuffer = new float[jf.width];
     }
 
     void render() {
-        northernLights();
-
         jf.colorMode(PConstants.RGB);
         jf.noStroke();
         jf.rectMode(PConstants.CORNER);
@@ -46,11 +43,15 @@ public class Lights {
         jf.vertex(halfW * 1.2f, jf.height);
         jf.vertex(jf.width * 0.2f, jf.height);
         jf.endShape();
+
+        roadLines();
     }
+
+    int newLine = 0;
 
     void roadLines() {
         jf.pushMatrix();
-        jf.translate(x, y);
+        jf.translate(x1 + (2 * 15), y1 - (2.5f * 15));
 
         jf.fill(255);
         jf.beginShape();
@@ -62,34 +63,58 @@ public class Lights {
 
         jf.popMatrix();
 
+        if (y1 > (halfH + (2.5f * 15)) * 0.5f)
+            newLine = 1;
+
+        if (newLine == 1) {
+            jf.pushMatrix();
+            jf.translate(x2 + (2 * 15), y2 - (2.5f * 15));
+
+            jf.fill(255);
+            jf.beginShape();
+            jf.vertex(midTop * 0.99f + 2, halfH);
+            jf.vertex(midTop * 1.01f - 2, halfH);
+            jf.vertex(midTop * 0.96f, halfH * 1.15f);
+            jf.vertex(midTop * 0.94f, halfH * 1.15f);
+            jf.endShape();
+
+            jf.popMatrix();
+        }
+
+        
         if (jf.getAudioPlayer().isPlaying()) {
             moveRoadLines();
         }
     }
 
     void moveRoadLines() {
-        if (x > -(midBot) && y < halfH) {
-            x -= 2 * 6;
-            y += 2.5f * 6;
+        if (x1 > -midBot - (2 * 15) && y1 < halfH + (2.5f * 15)) {
+            x1 -= 2 * 6;
+            y1 += 2.5 * 6;
         }
         else {
-            respawnLine();
+            respawnLine(0);
+        }
+
+        if (newLine == 1 && x2 > -midBot -(2 * 15) && y2 < halfH + (2.5f * 15)) {
+            x2 -= 2 * 6;
+            y2 += 2.5f * 6;
+        }
+        else {
+            respawnLine(1);
         }
     }
 
-    void respawnLine() {
-        x = 0;
-        y = 0;
-    }
-
-    int newCheck = 0;
-
-    int newLine() {
-        if (jf.getAudioPlayer().isPlaying() && y > halfH * 0.5f) {
-            newCheck = 1;
+    void respawnLine(int line) {
+        if (line == 0) {
+            x1 = 0;
+            y1 = 0;
         }
 
-        return newCheck;
+        if (line == 1) {
+            x2 = 0;
+            y2 = 0;
+        }
     }
 
     void northernLights() {
