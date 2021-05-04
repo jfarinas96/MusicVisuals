@@ -117,10 +117,29 @@ public class Car {
         jf.vertex(rightCorner - outline, middle);
         jf.endShape();
 
-        //headlights
+        // front grill
+        if (change == 1) {
+            jf.fill(175, 175, 175);
+            jf.stroke(105, 105, 105);
+        }
+        else {
+            jf.fill(114, 114, 114);
+            jf.stroke(65, 65, 65);
+        }
+        jf.strokeWeight(2);
+        jf.rect(halfW, headlightsY - 10, jf.width * 0.2f, incline - 10);
+        float top = (headlightsY - 10) - ((incline - 10) / 2);
+        float split = (incline - 10) / 4;
+        for (int i = 1; i < 4; i++) {
+            jf.line(jf.width * 0.4f, top + (split * i), jf.width * 0.6f, top + (split * i));
+        }
+        jf.strokeWeight(1);
+        jf.noStroke();
+
+        // headlights
         jf.fill(225, 173, 1);
-        jf.ellipse(leftCorner + 10, headlightsY - 10, incline + 12, incline + 12);
-        jf.ellipse(rightCorner - 10, headlightsY - 10, incline + 12, incline + 12);
+        jf.ellipse(leftCorner + 20, headlightsY - 10, incline + 12 + 20, incline);
+        jf.ellipse(rightCorner - 20, headlightsY - 10, incline + 12 + 20, incline);
         jf.popMatrix();
 
         if (jf.getAudioPlayer().isPlaying() && (jf.frameCount % 30) == 0) {
@@ -169,7 +188,6 @@ public class Car {
 
         if (change != 1) {
             jf.rectMode(PConstants.CENTER);
-
             jf.fill(255);
 
             jf.pushMatrix();
@@ -204,7 +222,7 @@ public class Car {
         jf.popMatrix();
 
         if (jf.getAudioPlayer().isPlaying())
-            sunY += 0.038f;
+            sunY += 0.035f;
 
         // rotating sun
         /*

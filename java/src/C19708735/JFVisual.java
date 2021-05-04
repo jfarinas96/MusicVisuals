@@ -20,7 +20,9 @@ public class JFVisual extends Visual {
             getAudioPlayer().cue(0);
             getAudioPlayer().play();
 
+            // reset
             change = 1;
+            visited = 0;
             car.reset();
         }
 
