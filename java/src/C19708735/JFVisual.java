@@ -8,10 +8,9 @@ public class JFVisual extends Visual {
     Wheel wheel;
     Lights lights;
 
-    int scene = 0;
-    int ready = 0;
-    int change = 1;
-    int visited = 0;
+    int scene = 1;
+    boolean day = true;
+    boolean visited = false;
 
     public void keyPressed()
     {
@@ -21,23 +20,23 @@ public class JFVisual extends Visual {
             getAudioPlayer().play();
 
             // reset
-            change = 1;
-            visited = 0;
+            day = true;
+            visited = false;
             car.reset();
         }
 
-        if (keyCode >= '0' && keyCode <= '2') {
+        if (keyCode >= '1' && keyCode <= '3') {
             scene = keyCode - '0';
         }
     
-        if (keyCode == '0')
+        if (keyCode == '1')
         {
-            visited = 1;
+            visited = true;
         }
         
-        if (keyCode == '2')
+        if (keyCode == '3')
         {
-            change = 2;
+            day = false;
         }
     }
 
@@ -58,21 +57,21 @@ public class JFVisual extends Visual {
         background(0);
 
         switch(scene) {
-            case 0: {
-                car.render(change, scene, visited);
+            case 1: {
+                car.render(day, scene, visited);
                 
                 break;
             }
 
-            case 1: {
+            case 2: {
                 wheel.render();
 
                 break;
             }
             
-            case 2: {
+            case 3: {
                 lights.render();
-                car.sky(change, scene, visited);
+                car.sky(day, scene, visited);
                 lights.northernLights();
             }
         }

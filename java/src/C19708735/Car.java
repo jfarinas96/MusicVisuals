@@ -35,7 +35,7 @@ public class Car {
         diameter = (int) (jf.height * 0.15f);
     }
 
-    void render(int change, int scene, int visited) {        
+    void render(boolean day, int scene, boolean visited) {        
 
         float centreScreen = halfW;
         float halfCar = centreScreen * 0.45f;
@@ -46,8 +46,8 @@ public class Car {
         float outline = 10;
         float headlightsY = ((middle + incline) + (jf.height * 0.75f)) / 2;
 
-        sky(change, scene, visited);
-        if (change == 1)
+        sky(day, scene, visited);
+        if (day)
             sun();
         else
             moon();
@@ -56,7 +56,7 @@ public class Car {
         jf.noStroke();
 
         // sand
-        if (change == 1)
+        if (day)
             jf.fill(145, 117, 74);
         else
             jf.fill(118, 95, 60);
@@ -64,7 +64,7 @@ public class Car {
         jf.rect(0, middle + 20, jf.width, jf.height - middle - 20);
 
         // road
-        if (change == 1)
+        if (day)
             jf.fill(37, 34, 30);
         else
             jf.fill(27, 25, 21);
@@ -87,7 +87,7 @@ public class Car {
         roadLines();
 
         // top section of car
-        if (change == 1)
+        if (day)
             jf.fill(169, 0, 0);
         else
             jf.fill(138, 3, 3);
@@ -118,7 +118,7 @@ public class Car {
         jf.endShape();
 
         // front grill
-        if (change == 1) {
+        if (day) {
             jf.fill(175, 175, 175);
             jf.stroke(105, 105, 105);
         }
@@ -155,7 +155,7 @@ public class Car {
         }
     }
 
-    void sky(int change, int speed, int visited) {
+    void sky(boolean day, int speed, boolean visited) {
 
         jf.colorMode(PConstants.HSB);
         float c, c1, c2;
@@ -163,7 +163,7 @@ public class Car {
 
         jf.calculateAverageAmplitude();
 
-        if (change == 1) {
+        if (day) {
             c1 = PApplet.map(10, 0, 360, 0, 255);
             c2 = PApplet.map(40, 0, 360, 0, 255);
             c = PApplet.map(jf.getSmoothedAmplitude(), 0, 1, c2, c1);
@@ -176,7 +176,7 @@ public class Car {
         }
         
         for (int i = 0; i < (int) halfH; i++) {
-            if (change == 1) {
+            if (day) {
                 jf.stroke(c, i + 50 + (10 * jf.getSmoothedAmplitude()), i);
             }
             else {
@@ -186,7 +186,7 @@ public class Car {
             jf.line(0, i, jf.width, i);
         }
 
-        if (change != 1) {
+        if (!day) {
             jf.rectMode(PConstants.CENTER);
             jf.fill(255);
 
@@ -201,7 +201,7 @@ public class Car {
 
             if (jf.getAudioPlayer().isPlaying()) {
                 starsY += 0.1f * (speed + 1);
-                if (visited == 1)
+                if (visited)
                     moonY += 0.03f;
                     // rotMoon -= 0.01f * 0.013;
             }
