@@ -9,29 +9,32 @@ public class Car {
 
     float halfW, halfH;
     float x, y;
-    float x1, y1;
+    float roadX, roadY;
+    float starsX;
     float[] randX, randY;
+    float rotStars = 0;
     float rotSun = 0;
     float rotMoon = 0;
     int diameter;
+    int numStars = 200;
     
     public Car(JFVisual jf, float w, float h) {
         this.jf = jf;
         this.halfW = w;
         this.halfH = h;
 
-        randX = new float[100];
-        randY = new float[100];
+        randX = new float[numStars];
+        randY = new float[numStars];
 
-        for (int i = 0; i < 100; i++) {
-            randX[i] = jf.random(0, jf.width);
+        for (int i = 0; i < numStars; i++) {
+            randX[i] = jf.random(-halfW, jf.width * 2.0f);
             randY[i] = jf.random(0, halfH);
         }
 
         diameter = (int) (jf.height * 0.15f);
     }
 
-    void render(int change) {        
+    void render(int change, int scene) {        
 
         float centreScreen = halfW;
         float halfCar = centreScreen * 0.45f;
@@ -42,7 +45,7 @@ public class Car {
         float outline = 10;
         float headlightsY = ((middle + incline) + (jf.height * 0.75f)) / 2;
 
-        sky(change);
+        sky(change, scene);
         if (change != 1)
             moon();
 
@@ -119,10 +122,18 @@ public class Car {
 
         if (jf.getAudioPlayer().isPlaying() && (jf.frameCount % 30) == 0) {
             x += jf.random(-3, 3);
+
+            if (x < -(jf.width * 0.2f)) {
+                y += 4;
+            }
+
+            if (x > jf.width * 0.2f) {
+                y -= 4;
+            }
         }
     }
 
-    void sky(int change) {
+    void sky(int change, int speed) {
 
         jf.colorMode(PConstants.HSB);
         float c, c1, c2;
@@ -144,7 +155,7 @@ public class Car {
         
         for (int i = 0; i < (int) halfH; i++) {
             if (change == 1) {
-                jf.stroke(c, i + 50, i);
+                jf.stroke(c, i + (200 * jf.getSmoothedAmplitude()), i);
             }
             else {
                 jf.stroke(c, i * c, i * b);
@@ -157,9 +168,19 @@ public class Car {
             jf.rectMode(PConstants.CENTER);
 
             jf.fill(255);
+
+            jf.pushMatrix();
+            jf.translate(starsX, 0);
             
-            for (int j = 0; j < 100; j++) {
+            for (int j = 0; j < numStars; j++) {
                 jf.rect(randX[j], randY[j], 2, 2);
+            }
+
+            jf.popMatrix();
+
+            if (jf.getAudioPlayer().isPlaying()) {
+                starsX -= 0.1f * (speed + 1);
+                rotMoon -= 0.01f * 0.012;
             }
         }
     }
@@ -211,15 +232,12 @@ public class Car {
         jf.ellipse(-cx + jf.width + (diameter * 0.5f), -cy + (halfH - 50) - (diameter * 0.75f), diameter, diameter);
 
         jf.popMatrix();
-
-        if (jf.getAudioPlayer().isPlaying())
-            rotMoon -= 0.01f * 0.015;
     }
 
 
     void roadLines() {
         jf.pushMatrix();
-        jf.translate(x1, y1);
+        jf.translate(roadX, roadY);
 
         jf.fill(255);
         jf.beginShape();
@@ -237,9 +255,9 @@ public class Car {
     }
 
     void moveRoadLines() {
-        if (y1 > -((halfH) + 40)) {
+        if (roadY > -((halfH) + 40)) {
 
-            y1 -= 2.5f * 5;
+            roadY -= 2.5f * 5;
         }
         else {
             respawnLine();
@@ -247,6 +265,6 @@ public class Car {
     }
 
     void respawnLine() {
-        y1 = (jf.height * 0.2f) + 10;
+        roadY = (jf.height * 0.2f) + 10;
     }
 }

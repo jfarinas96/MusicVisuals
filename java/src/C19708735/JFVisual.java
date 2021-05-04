@@ -50,7 +50,7 @@ public class JFVisual extends Visual {
 
         switch(scene) {
             case 0: {
-                car.render(change);
+                car.render(change, scene);
                 
                 break;
             }
@@ -62,7 +62,7 @@ public class JFVisual extends Visual {
             }
             
             case 2: {
-                car.sky(change);
+                car.sky(change, scene);
                 lights1.render();
                 lights1.roadLines();
 

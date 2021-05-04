@@ -87,7 +87,7 @@ public class Wheel {
         jf.popMatrix();
 
         jf.calculateAverageAmplitude();
-        rotation -= jf.getAmplitude();
+        rotation -= jf.getSmoothedAmplitude();
 
         jf.strokeWeight(1);
     }
