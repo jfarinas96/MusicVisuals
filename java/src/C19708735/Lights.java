@@ -26,7 +26,10 @@ public class Lights {
         lerpedBuffer = new float[jf.width];
     }
 
-    void render() {
+    void render(boolean day) {
+        if (!day)
+            northernLights();
+
         jf.colorMode(PConstants.RGB);
         jf.noStroke();
         jf.rectMode(PConstants.CORNER);
@@ -45,6 +48,43 @@ public class Lights {
         jf.endShape();
 
         roadLines();
+
+        // mountains
+        jf.fill(12, 20, 25);
+        jf.beginShape();
+        jf.vertex(0, halfH);
+        jf.vertex(0, halfH * 0.95f);
+        jf.vertex(jf.width * 0.18f, halfH * 0.65f);
+        jf.vertex(jf.width * 0.2f, halfH * 0.69f);
+        jf.vertex(jf.width * 0.28f, halfH * 0.55f);
+        jf.vertex(jf.width * 0.3f, halfH * 0.6f);
+        jf.vertex(jf.width * 0.31f, halfH * 0.59f);
+        jf.vertex(jf.width * 0.58f, halfH);
+        jf.endShape();
+
+        jf.beginShape();
+        jf.fill(27, 42, 51);
+        jf.vertex(jf.width * 0.64f, halfH);
+        jf.vertex(jf.width * 0.78f, halfH * 0.66f);
+        jf.vertex(jf.width * 0.79f, halfH * 0.66f);
+        jf.vertex(jf.width * 0.82f, halfH * 0.6f);
+        jf.vertex(jf.width * 0.88f, halfH * 0.72f);
+        jf.vertex(jf.width * 0.92f, halfH * 0.74f);
+        jf.vertex(jf.width, halfH * 0.88f);
+        jf.vertex(jf.width, halfH);
+        jf.endShape();
+
+        jf.beginShape();
+        jf.fill(44, 64, 76);
+        jf.vertex(jf.width * 0.45f, halfH);
+        jf.vertex(jf.width * 0.55f, halfH * 0.7f);
+        jf.vertex(jf.width * 0.62f, halfH * 0.8f);
+        jf.vertex(jf.width * 0.65f, halfH * 0.79f);
+        jf.vertex(jf.width * 0.78f, halfH * 0.9f);
+        jf.vertex(jf.width * 0.82f, halfH * 0.88f);
+        jf.vertex(jf.width, halfH * 0.98f);
+        jf.vertex(jf.width, halfH);
+        jf.endShape();
     }
 
     int newLine = 0;

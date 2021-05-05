@@ -70,9 +70,8 @@ public class JFVisual extends Visual {
             }
             
             case 3: {
-                lights.render();
                 car.sky(day, scene, visited);
-                lights.northernLights();
+                lights.render(day);
             }
         }
         
