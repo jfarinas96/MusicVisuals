@@ -35,7 +35,7 @@ public class Car {
         diameter = (int) (jf.height * 0.15f);
     }
 
-    void render(boolean day, int scene, boolean visited) {        
+    void render(boolean day) {        
 
         float centreScreen = halfW;
         float halfCar = centreScreen * 0.45f;
@@ -45,12 +45,6 @@ public class Car {
         float incline = leftCorner * 0.2f;
         float outline = 10;
         float headlightsY = ((middle + incline) + (jf.height * 0.75f)) / 2;
-
-        sky(day, scene, visited);
-        if (day)
-            sun();
-        else
-            moon();
 
         jf.colorMode(PConstants.RGB);
         jf.noStroke();
@@ -163,7 +157,7 @@ public class Car {
         }
     }
 
-    void sky(boolean day, int speed, boolean visited) {
+    void sky(boolean day, int scene, boolean visited) {
 
         jf.colorMode(PConstants.HSB);
         float c, c1, c2;
@@ -193,8 +187,10 @@ public class Car {
 
             jf.line(0, i, jf.width, i);
         }
-
-        if (!day) {
+        
+        if (day)
+            sun();
+        else {
             jf.rectMode(PConstants.CENTER);
             jf.fill(255);
 
@@ -208,11 +204,14 @@ public class Car {
             jf.popMatrix();
 
             if (jf.getAudioPlayer().isPlaying()) {
-                starsY += 0.1f * (speed + 1);
+                starsY += 0.1f * (scene + 1);
                 if (visited)
                     moonY += 0.03f;
                     // rotMoon -= 0.01f * 0.013;
             }
+
+            if (scene == 1)
+                moon();
         }
     }
 
@@ -323,5 +322,6 @@ public class Car {
         sunY = 0;
         starsY = 0;
         moonY = 0;
+        x = 0;
     }
 }

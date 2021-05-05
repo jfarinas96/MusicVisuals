@@ -36,7 +36,9 @@ public class JFVisual extends Visual {
         
         if (keyCode == '3')
         {
-            day = false;
+            if (getAudioPlayer().isPlaying()) {
+                day = false;
+            }
         }
     }
 
@@ -58,7 +60,8 @@ public class JFVisual extends Visual {
 
         switch(scene) {
             case 1: {
-                car.render(day, scene, visited);
+                car.sky(day, scene, visited);
+                car.render(day);
                 
                 break;
             }

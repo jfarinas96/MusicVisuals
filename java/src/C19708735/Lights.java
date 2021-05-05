@@ -47,7 +47,7 @@ public class Lights {
         jf.vertex(jf.width * 0.2f, jf.height);
         jf.endShape();
 
-        roadLines();
+        roadLines(day);
 
         // mountains
         /*
@@ -103,7 +103,7 @@ public class Lights {
 
     int newLine = 0;
 
-    void roadLines() {
+    void roadLines(boolean day) {
         jf.pushMatrix();
         jf.translate(x1 + (2 * 15), y1 - (2.5f * 15));
 
@@ -137,22 +137,34 @@ public class Lights {
 
         
         if (jf.getAudioPlayer().isPlaying()) {
-            moveRoadLines();
+            moveRoadLines(day);
         }
     }
 
-    void moveRoadLines() {
+    void moveRoadLines(boolean day) {
         if (x1 > -midBot - (2 * 15) && y1 < halfH + (2.5f * 15)) {
-            x1 -= 2 * 6;
-            y1 += 2.5 * 6;
+            if (day) {
+                x1 -= 2 * 3;
+                y1 += 2.5 * 3;
+            }
+            else {
+                x1 -= 2 * 9;
+                y1 += 2.5 * 9;
+            }
         }
         else {
             respawnLine(0);
         }
 
         if (newLine == 1 && x2 > -midBot -(2 * 15) && y2 < halfH + (2.5f * 15)) {
-            x2 -= 2 * 6;
-            y2 += 2.5f * 6;
+            if (day) {
+                x2 -= 2 * 3;
+                y2 += 2.5 * 3;
+            }
+            else {
+                x2 -= 2 * 9;
+                y2 += 2.5 * 9;
+            }
         }
         else {
             respawnLine(1);
