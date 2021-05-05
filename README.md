@@ -47,18 +47,17 @@ I think this part of the assignment fits well with the theme of *something beaut
 
 ## Screenshots
 
-Scene 1
-![An image](images/scene1.png)
+### Scene 1
+![Sunset](images/scene1.png)
 
-Scene 2
-![An image](images/scene2.png)
+### Scene 2
+![Wheel](images/scene2.png)
 
-Scene 3
-![An image](images/scene3.png)
+### Scene 3
+![Northern Lights](images/scene3.png)
 
-Scene 4
-![An image](images/scene4.png)
+### Scene 4
+![Night](images/scene4.png)
 
 ## Video
-
 [![YouTube](http://img.youtube.com/vi/dvg4vXOE_-A/0.jpg)](https://www.youtube.com/watch?v=dvg4vXOE_-A)
