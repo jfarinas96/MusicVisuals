@@ -50,6 +50,7 @@ public class Lights {
         roadLines();
 
         // mountains
+        /*
         jf.fill(12, 20, 25);
         jf.beginShape();
         jf.vertex(0, halfH);
@@ -72,6 +73,19 @@ public class Lights {
         jf.vertex(jf.width * 0.92f, halfH * 0.74f);
         jf.vertex(jf.width, halfH * 0.88f);
         jf.vertex(jf.width, halfH);
+        jf.endShape();
+        */
+
+        jf.fill(27, 42, 51);
+        jf.beginShape();
+        jf.vertex(0, halfH);
+        jf.vertex(0, halfH * 0.95f);
+        jf.vertex(jf.width * 0.18f, halfH * 0.75f);
+        jf.vertex(jf.width * 0.2f, halfH * 0.79f);
+        jf.vertex(jf.width * 0.28f, halfH * 0.65f);
+        jf.vertex(jf.width * 0.3f, halfH * 0.7f);
+        jf.vertex(jf.width * 0.31f, halfH * 0.69f);
+        jf.vertex(jf.width * 0.58f, halfH);
         jf.endShape();
 
         jf.beginShape();
