@@ -84,7 +84,12 @@ public class Car {
         jf.rect(leftCorner + 10, jf.height * 0.75f, incline + 20, incline * 0.8f);
         jf.rect(rightCorner - 10, jf.height * 0.75f, incline + 20, incline * 0.8f);
 
+        jf.popMatrix();
+
         roadLines();
+
+        jf.pushMatrix();
+        jf.translate(x, y);
 
         // top section of car
         if (day)
@@ -128,11 +133,13 @@ public class Car {
         }
         jf.strokeWeight(2);
         jf.rect(halfW, headlightsY - 10, jf.width * 0.2f, incline - 10);
+
         float top = (headlightsY - 10) - ((incline - 10) / 2);
         float split = (incline - 10) / 4;
         for (int i = 1; i < 4; i++) {
             jf.line(jf.width * 0.4f, top + (split * i), jf.width * 0.6f, top + (split * i));
         }
+        
         jf.strokeWeight(1);
         jf.noStroke();
 
@@ -140,6 +147,7 @@ public class Car {
         jf.fill(225, 173, 1);
         jf.ellipse(leftCorner + 20, headlightsY - 10, incline + 12 + 20, incline);
         jf.ellipse(rightCorner - 20, headlightsY - 10, incline + 12 + 20, incline);
+
         jf.popMatrix();
 
         if (jf.getAudioPlayer().isPlaying() && (jf.frameCount % 30) == 0) {
